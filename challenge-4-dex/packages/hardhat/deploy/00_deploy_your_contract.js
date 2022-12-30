@@ -2,7 +2,7 @@
 
 const { ethers } = require("hardhat");
 
-const localChainId = "31337";
+// const localChainId = "31337";
 
 // const sleep = (ms) =>
 //   new Promise((r) =>
@@ -12,10 +12,10 @@ const localChainId = "31337";
 //     }, ms)
 //   );
 
-module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
+module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
-  const chainId = await getChainId();
+  // const chainId = await getChainId();
 
   await deploy("Balloons", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
@@ -38,20 +38,20 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
 
   // paste in your front-end address here to get 10 balloons on deploy:
   await balloons.transfer(
-    "0x389938604F49939E9240b2B357F72f0a3d412af0",
+    "0xf8b97e046a8bc4771a5b24b8b9053026adabb76d",
     "" + 10 * 10 ** 18
   );
 
   // // uncomment to init DEX on deploy:
-   console.log(
-     "Approving DEX (" + dex.address + ") to take Balloons from main account..."
-   );
-   // If you are going to the testnet make sure your deployer account has enough ETH
-   await balloons.approve(dex.address, ethers.utils.parseEther("100"));
-   console.log("INIT exchange...");
-   await dex.init(ethers.utils.parseEther("5"), {
-     value: ethers.utils.parseEther("5"),
-     gasLimit: 200000,
-   });
+  console.log(
+    "Approving DEX (" + dex.address + ") to take Balloons from main account..."
+  );
+  // If you are going to the testnet make sure your deployer account has enough ETH
+  await balloons.approve(dex.address, ethers.utils.parseEther("100"));
+  console.log("INIT exchange...");
+  await dex.init(ethers.utils.parseEther("0.01"), {
+    value: ethers.utils.parseEther("0.01"),
+    gasLimit: 200000,
+  });
 };
 module.exports.tags = ["Balloons", "DEX"];
